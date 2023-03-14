@@ -1,4 +1,4 @@
-# Section 02 - Setup Network
+# Section 02 - Setting Up Network
 
 We're going to set up a network that ranged from `11.11.11.1` to `11.11.11.254` with a domain called `demo.com`.
 
@@ -11,7 +11,7 @@ classDiagram
         Router IP: (11.11.11.1 default gateway)
         Subnet Mask: (255.255.255.0)
         local DHCP Server: (11.11.11.2)
-        local DHCP MAC: (2C:27:D7:2A:4B:AF)
+        local DHCP MAC: (60:32:B1:54:10:9E)
     }
 
     class DomainController{
@@ -40,7 +40,7 @@ classDiagram
 
 
 
-## Setup Router DNS Configuration
+## Setting up Router DNS Configuration
 
 - #### 1. Access Router Configuration Interface 
 We need to set up **LAN** part of the router including IP address, subnet mask, default gateway. To do this, we need to access the router configuration interface through browser. By default, the IP address of ***ASUS RT-AC68U*** is `192.168.1.1`. So open the ***Edge*** browser, enter `192.168.1.1`.
@@ -72,7 +72,11 @@ Mac address             IP address
 60:32:B1:54:10:9E       11.11.11.2
 ```
 
-- #### 5. Setup Server IP Address
+
+
+## Setting Up Server DNS Configuration & Promoting Server to Domain Controller
+
+- #### 1. Setup Server IP Address
 Back to this server's desktop, open **"Server Manager"** window. Click the ***value*** of the **"Ethernet"** field ->
 
 right-click **"Ethernet"** icon (on **"Network Connections"** window) -> click **"Properties"** ->
@@ -91,35 +95,35 @@ Complete the DNS configuration (on **"Internet Protocol Version 4 (TCP/IPv4) Pro
     Alternative DNS server:     [empty]
 ```
 
-- #### 6. Add "Active Directory Domain Service" Role
+- #### 2. Add "Active Directory Domain Service" Role
 So far, you cannot connect to the internet yet because this server cannot resolve its DNS server. So you need to add **"Active Directory Domain Service" (AD DS)** role to this server at first. Once this server added **AD DS** role, you could promote this to a domain controller and add **"DNS server"** role to this.
 
 To add **"Active Directory Domain Service"** role, you need to open the **"Server Manager"** at first.
 
 Click **"Manage"** (top right menu bar on **"Server Manager"** window) -> **"Add Roles and Features"** ->
 
-**"Next"** (on **"Before you Begin"** tab of **"Add Roles and Features Wizard"** window) ->
+-> **"Next"** (on **"Before you Begin"** tab of **"Add Roles and Features Wizard"** window) ->
 
-**"Role-based or feature-basesd installation"** (**"Installation Type"** tab) ->
+-> **"Role-based or feature-basesd installation"** (**"Installation Type"** tab) ->
 
-**"Select a server from the server pool"** (**"Server Selection"** tab) ->
+-> **"Select a server from the server pool"** (**"Server Selection"** tab) ->
 
-check **"Active Directory Domain Services" checkbox** (**"Server Roles"** tab) -> 
+-> check **"Active Directory Domain Services" checkbox** (**"Server Roles"** tab) -> 
 
-leave remaining things as default and continue through the prompt until the end
+-> leave remaining things as default and continue through the prompt until the end
 
-- #### 7. Promote Server to Domain Controller & Add "DNS Server" Role
+- #### 3. Promote Server to Domain Controller & Add "DNS Server" Role
 Back to the **"Server Manager"** window, **"notification flag"** icon appeared on the top right menu bar, click on the icon -> **"Promote the server to a domain controller"** ->
 
 **Add a new forest** and enter `demo.com` in the **"Root domain name:"** field (on **"Deployment Configuration"** tab of **"Active Directory Domain Services Configuration Wizard"** window) ->
 
-make sure the **"Domain Name System (DNS) server"** and **"Global Catalog (GC)"** checkboxes are checked and enter **"DSRM password"** (on **"Domain Controller Options"** tab) ->
+-> make sure the **"Domain Name System (DNS) server"** and **"Global Catalog (GC)"** checkboxes are checked and enter **"DSRM password"** (on **"Domain Controller Options"** tab) ->
 
-make sure the **"Create DNS delegation"** checkbox ***uncheck*** (on **"DNS Options"** tab) ->
+-> make sure the **"Create DNS delegation"** checkbox ***uncheck*** (on **"DNS Options"** tab) ->
 
-leave **"The NetBIOS domain name:"** field as default `DEMO` (on **"Additional Options"** tab) ->
+-> leave **"The NetBIOS domain name:"** field as default `DEMO` (on **"Additional Options"** tab) ->
 
-leave remaining things as default and continue through prompts until the end
+-> leave remaining things as default and continue through prompts until the end
 
 #The **"Global Catalog"** option means that the server will list all ***Active Directory objects***
 
@@ -127,10 +131,72 @@ leave remaining things as default and continue through prompts until the end
 
 #Leaving **"Create DNS delegation"** uncheck so that people from outside will **NOT** be able to resolve **local DNS names** on your **local DNS server**, names like `demo.com`. This is fine because we don't want people on the Internet to be able to access our server.
 
-- #### 8. NetBIOS Appeared on Login Cover Page
+- #### 4. NetBIOS Appeared on Login Cover Page
 Once the server restart and you'll see the login cover page, you should see the **NetBIOS** name of our domain `DEMO` proceeds the user account we are logging into. In this case, `DEMO\Administrator`, this is in the format of `[domain name]\[domain user name]`
     
 If you had multiple domains, we could specify a different domain by typing in the `[domain name]\[domain user name]` on the login cover page.
 
-Once you logged in, the first thing you're notice is a new role - **AD DS** and **DNS** in the **"Server Manager" window**, and the serve can connect to the internet now.
+Once you logged in, the first thing you're notice is a new role - **AD DS** and **DNS** in the **"Server Manager" window**, and the serve should be able to connect to the internet now.
 
+
+
+## Adding DHCP Role to Server and Configuring DHCP Server
+In order to assign IP addresses to client computers within `demo.com` network, you need to add **DHCP** role to the server by using **"Server Manager"**.
+
+After the role is added, you need to open **"DHCP" Microsoft Management Console (MMC)**. To do this, open **"Server Manager"**.
+
+On the **"Server Manager"** window, click **"Tools"** (top right menu bar on **"Server Manager"** window) -> **"DHCP"**. The **DHCP MMC** should be appeared.
+
+On the **DHCP MMC**, expand `demodc.demo.com`, you should something like this:
+```
+DHCP
+    demodc.demo.com
+        > IPv4
+        > IPv6
+```
+
+Click **"IPv4"** -> right-click **"IPv4"** -> **"New Scope..."**. A **"New Scope Wizard"** window should be appeared.
+
+On the window, set up the **"Scope Name"** as follow:
+```
+Name:           IPv4 Scope
+Description:    11.11.11.1 - 254
+```
+
+Set up the **"IP Address Range"** as follow:
+```
+Configuration settings for DHCP Server
+    Enter the range of addresses that the scope distributes.
+        Start IP address:   11.11.11.1
+        End IP address:     11.11.11.254
+
+Configuration settings that propagate to DHCP Client
+        Length:             24              // auto filled
+        Subnet mask:        255.255.255.0
+```
+
+Set up the **"Add Exclusions and Delay"** as follow:
+```
+Start IP address:       End IP address:
+11.11.11.1              11.11.11.20
+```
+
+Leave the **"Lease Duration"** as default and that is **8 days**.
+
+On the **"Configure DHCP Options"** window, select **"No, I will configure these options later"** option. Then continue through the prompt until the end.
+
+
+
+## Configuring DHCP Scope
+Back to the **DHCP MMC**, on the ***left pane***, expand `demodc.demo.com` -> expand **"IPv4"** -> expand **"Scope[11.11.11.0] IPv4 Scope"** -> right-click **"Scope Options"** -> **"Configure Options..."**. A **"Scope Options"** window should be appeared.
+
+On this window, check the checkboxes and fill the data as follow:
+```
+[v] 003 Router                  IP address:     11.11.11.1
+...
+[v] 006 DNS Servers             IP address:     11.11.11.2
+...
+[v] 015 DNS Domain Name         String value:   demo.com
+```
+
+Once **DHCP "Scope Options"** are configured, the DHCP server should be able to assign IP addresses to all the client computers that connected to the `demo.com` domain network.
