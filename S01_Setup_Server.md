@@ -1,56 +1,23 @@
-# Section 01 - Setup Window Server 2016 and Setup a Network
-We're going to set up a network that ranged from `11.11.11.1` to `11.11.11.254` with a domain called `demo.com`.
-
-Here is the basic set up diagram for our demo network with DNS configuration:
-```mermaid
-classDiagram
-    class Router {
-        WAN: IP from external DHCP
-        LAN: (Configure manually)
-        Router IP: (11.11.11.1 default gateway)
-        Subnet Mask: (255.255.255.0)
-        local DHCP Server: (11.11.11.2)
-        local DHCP MAC: (2C:27:D7:2A:4B:AF)
-    }
-
-    class DomainController{
-        DNS Server
-        NIC DNS Configuration:
-        NIC IP: 11.11.11.2
-        Subnet Mask: 255.255.255.0
-        default gateway: 11.11.11.1
-        Preferred DNS: 127.0.0.1
-        DCHP Scope Configuration(local)
-        003 Router: (11.11.11.1)
-        006 DNS Server: (11.11.11.2)
-        015 DNS Domain Name: (demo.com)
-    }
-
-    class Client{
-        Domain User
-        DNS Configuration(from local DHCP)
-    }
-
-      Internet --|> Router
-      Router --|> Switch
-      Switch --|> DomainController
-      Client --|> Switch
-```
+# Section 01 - Setup Window Server 2016
 
 
 
-## Basic Setup of Router
-Before installing Windows Server 2016 on a server, you need to set up a router that is used to connect to internet, because we need to download the ***Edge*** web browser, activate the license key and synchronize the time for our server.
+## Setting Up Fresh Router
+Before installing Windows Server 2016 on a server, you need to set up a router that is used to connect to internet.
 
 We're going to use ***ASUS RT-AC68U*** as the demo router in our case. At this moment, you just need to make sure the DNS configuration of the **WAN** part is getting from external DHCP server, and making sure that the DNS configuration of the **LAN** part is set to router built-in **DHCP**.
 
 
 
-## Configuring Windows Server 2016
+## Configuring Fresh Windows Server 2016
 After the Windows Server 2016 is installed on a server, there are some steps you have to follow:
 
 
-### 1. Activate Windows Server 2016 License Key
+### 1. Connect Server to Router
+We need to connect the server to the router because we need the internet to download the ***Edge*** web browser, activate the license key and synchronize the time for our server.
+
+
+### 2. Activate Windows Server 2016 License Key
 Click **"Windows"** icon -> **"Settings"** icon -> **"System"** (on ***Settings*** windows) ->
 
 **"About"** (on ***Left pane*** of ***Settings*** window) -> **"Change product key or upgrade your edition of Windows"**
@@ -68,7 +35,11 @@ Enter the license key to finish the prompt.
 7. Windows is now activated
 
 
-### 2. Setup Correct Time, Time Zone and Region
+### 3. Setup Correct Time, Time Zone and Region
+Time must be synchronized between the client machine and the domain controller. If the client's clock is ahead of the domain controller's clock, it could cause authentication failures. Windows makes it mandatory to have a maximum time difference of five minutes between the domain controller and client.
+
+To set up a correct time, here are the few steps you have to follow:
+
 Click **"Windows"** icon -> **"Settings"** icon -> **"Time & language"** (on ***Settings*** windows) ->
 
 - Click **"Region & language"** (on ***Left pane*** of ***Settings*** window). In the **"Windows and apps might use your country or region to give you local content"** field, select **"Hong Kong SAR"**
@@ -85,7 +56,15 @@ Time zone
 ```
 
 
-### 3. Download Web Browser "*Edge*" through Internel Explorer
+### 4. Download Web Browser "*Edge*" through Internel Explorer
 
 
-### 4. Rename Server
+### 5. Rename Server
+In **"Server Manager"** window, click **"Local Server"** (on ***Left pane***) -> ***value*** of **"Computer name"** field (on ***Main pane***) ->
+
+**"Change..."** button (on **"System Properties"** window's **"Computer Name"** tab)
+
+Fill the name you would like in the **"Computer name:"** field on the **"Computer Name/Domain Changes"** window. In our case, ***"demodc"***. It's going to prompt you to restart the system, just restart it. 
+
+
+
