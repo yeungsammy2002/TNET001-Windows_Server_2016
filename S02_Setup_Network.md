@@ -34,7 +34,7 @@ classDiagram
 
     Internet --|> Router
     Router --|> Switch
-    Switch --|> DomainController
+    Switch --| DomainController
     Client --|> Switch
 ```
 
