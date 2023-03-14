@@ -6,6 +6,19 @@
 Before installing Windows Server 2016 on a server, you need to set up a router that is used to connect to internet.
 
 We're going to use ***ASUS RT-AC68U*** as the demo router in our case. At this moment, you just need to make sure the DNS configuration of the **WAN** part is getting from external DHCP server, and making sure that the DNS configuration of the **LAN** part is set to router built-in **DHCP**.
+```mermaid
+classDiagram
+    class Router {
+        WAN: DHCP
+        LAN: DHCP
+    }
+
+    class Server {
+        DNS Configuration: DHCP
+    }
+
+    Router --|> Server
+```
 
 
 
@@ -64,7 +77,7 @@ In **"Server Manager"** window, click **"Local Server"** (on ***Left pane***) ->
 
 **"Change..."** button (on **"System Properties"** window's **"Computer Name"** tab)
 
-Fill the name you would like in the **"Computer name:"** field on the **"Computer Name/Domain Changes"** window. In our case, ***"demodc"***. It's going to prompt you to restart the system, just restart it. 
+Fill the name you would like in the **"Computer name:"** field on the **"Computer Name/Domain Changes"** window. In our case, ***"demodc"***. It's going to prompt you to restart the system, so just do it. 
 
 
 
