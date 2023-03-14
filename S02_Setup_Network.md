@@ -34,7 +34,7 @@ classDiagram
 
     Internet --|> Router
     Router --|> Switch
-    Switch --| DomainController
+    Switch <|-- DomainController
     Client --|> Switch
 ```
 
@@ -109,4 +109,28 @@ check **"Active Directory Domain Services" checkbox** (**"Server Roles"** tab) -
 leave remaining things as default and continue through the prompt until the end
 
 - #### 7. Promote Server to Domain Controller & Add "DNS Server" Role
+Back to the **"Server Manager"** window, **"notification flag"** icon appeared on the top right menu bar, click on the icon -> **"Promote the server to a domain controller"** ->
+
+**Add a new forest** and enter `demo.com` in the **"Root domain name:"** field (on **"Deployment Configuration"** tab of **"Active Directory Domain Services Configuration Wizard"** window) ->
+
+make sure the **"Domain Name System (DNS) server"** and **"Global Catalog (GC)"** checkboxes are checked and enter **"DSRM password"** (on **"Domain Controller Options"** tab) ->
+
+make sure the **"Create DNS delegation"** checkbox ***uncheck*** (on **"DNS Options"** tab) ->
+
+leave **"The NetBIOS domain name:"** field as default `DEMO` (on **"Additional Options"** tab) ->
+
+leave remaining things as default and continue through prompts until the end
+
+#The **"Global Catalog"** option means that the server will list all ***Active Directory objects***
+
+#The **"DSRM password"** allows an administrator to **take an instance of AD offline** for maintenance or troubleshooting. This is not commonly used, but you have to keep the password around just in case.
+
+#Leaving **"Create DNS delegation"** uncheck so that people from outside will **NOT** be able to resolve **local DNS names** on your **local DNS server**, names like `demo.com`. This is fine because we don't want people on the Internet to be able to access our server.
+
+- #### 8. NetBIOS Appeared on Login Cover Page
+Once the server restart and you'll see the login cover page, you should see the **NetBIOS** name of our domain `DEMO` proceeds the user account we are logging into. In this case, `DEMO\Administrator`, this is in the format of `[domain name]\[domain user name]`
+    
+If you had multiple domains, we could specify a different domain by typing in the `[domain name]\[domain user name]` on the login cover page.
+
+Once you logged in, the first thing you're notice is a new role - **AD DS** and **DNS** in the **"Server Manager" window**, and the serve can connect to the internet now.
 
