@@ -1,7 +1,24 @@
 # Section 03 - Domain Controller Acting as Router
-This is a guide about how build a domain controller that have both DNS server, DHCP server and router roles.
+This is a guide about how build a **domain controller** that have **AD DS**, **DNS server**, **DHCP server** and **Router & remote access roles**. The main benefit of this setup is that you can direct remote access to the domain controller of inside domain although you are in outside domain. This setting is usually used for testing and learning purposes.
 
-Here is a diagram that showing how to connect a domain controller, a client computer and a switch to create a network:
+
+
+## Getting Started
+We assume that you're starting on a fresh Windows Server 2016. Here are some steps you have to follow before adding the router role:
+
+1. We need to install two **NICs** to your server. One **NIC** is for **LAN**, another **NIC** is for **WAN**.
+
+2. Make sure that the **NIC** for **WAN** is getting **DNS configuration** from **external DHCP**, and then disable another **NIC** for **LAN**.
+
+3. Add **Active Directory and Domain Service role** to the server.
+
+4. Promote to **domain controller**, set up a new forest (i.e. `demo.com`) and add **DNS Server** role.
+
+
+
+## Setting Up DNS Configuration for WAN & LAN NICs
+
+Here is a diagram that showing how a domain controller, a client computer and a switch are connected together to create a network:
 ```mermaid
 classDiagram
     class DomainController {
@@ -34,6 +51,65 @@ classDiagram
     Internet <|-- Switch
     Switch <|-- DomainController
     Switch <|-- Client
+```
+
+
+- ### Setting Up DNS Configuration on WAN NIC
+Open **"Server Manager"**, click the value of the **"Ethernet"** field to change the DNS configuration of IPv4 as follow:
+```
+IP address:             10.122.226.8
+Subnet mask:            255.255.252.0
+Default gateway:        10.122.224.38
+
+Preferred DNS server:   10.122.224.20
+Alternate DNS server:   10.122.224.21
+```
+Then rename the NIC to **"WAN"**.
+
+
+- ### Setting Up DNS Configuration on LAN NIC
+```
+IP address:             11.11.11.1
+Subnet mask:            255.255.255.0
+Default gateway:        [empty]
+
+Preferred DNS server:   127.0.0.1
+Alternate DNS server:   [empty]
+```
+
+- ### Adding DHCP Server role to Server & Create New DHCP Scope Under IPv4
+Open **"Server Manager"**, add the **DHCP Server** role to the server.
+
+After the role is added, create a new DHCP scope under **"IPv4"** with following configuration:
+
+Set up the **"Scope Name"** as follow:
+```
+Name:           IPv4 Scope
+Description:    11.11.11.1 - 254
+```
+Set up the **"IP Address Range"** as follow:
+```
+Configuration settings for DHCP Server
+    Enter the range of addresses that the scope distributes.
+        Start IP address:   11.11.11.1
+        End IP address:     11.11.11.254
+
+Configuration settings that propagate to DHCP Client
+        Length:             24              // auto filled
+        Subnet mask:        255.255.255.0
+```
+Set up the **"Add Exclusions and Delay"** as follow:
+```
+Start IP address:       End IP address:
+11.11.11.1              11.11.11.20
+```
+Leave the **"Lease Duration"** as default and that is **8 days**.
+
+
+- ### Configuring DHCP Scope
+Then configure the **DHCP Scope Options** under **"IPv4"** as follow:
+```
+003 Router
 ```
 
 
