@@ -1,4 +1,41 @@
 # Section 03 - Domain Controller Acting as Router
+This is a guide about how build a domain controller that have both DNS server, DHCP server and router roles.
+
+Here is a diagram that showing how to connect a domain controller, a client computer and a switch to create a network:
+```mermaid
+classDiagram
+    class DomainController {
+        WAN IP: 10.122.226.8
+        WAN Subnet: 255.255.252.0
+        WAN Default gateway: 10.122.224.38
+        WAN Preferred DNS: 10.122.224.20
+        WAN Alternate DNS: 10.122.224.21
+        ----
+        DNS server: demo.com
+        ----
+        LAN IP: 11.11.11.1
+        LAN Subnet: 255.255.255.0
+        LAN Default gateway: 11.11.11.1
+        LAN Preferred DNS: 127.0.0.1
+        LAN Alternate DNS: [empty]
+        ----
+        Routing and Remote Access: NAT
+        DHCP Scope: (LAN)
+        003 Router: (11.11.11.1)
+        006 DNS Servers: (11.11.11.1)
+        015 DNS Domain Name: (demo.com)
+    }
+
+    class Client {
+        IP: from DHCP
+        domain: demo.com
+    }
+
+    Internet <|-- Switch
+    Switch <|-- DomainController
+    Switch <|-- Client
+```
+
 
 
 ## Two Default Gateways Configured on Same Server
@@ -32,8 +69,9 @@ Network Destination        Netmask          Gateway       Interface  Metric
 ===========================================================================
 Persistent Routes:
   Network Address          Netmask  Gateway Address  Metric
-
+          0.0.0.0          0.0.0.0    10.122.224.38  Default
 ===========================================================================
+...
 ```
 
 #### 3. Identify the interface that connects to the LAN by looking at the network destination for the `0.0.0.0` route. It should list the IP address of the LAN interface.
