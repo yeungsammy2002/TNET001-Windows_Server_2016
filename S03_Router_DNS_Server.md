@@ -30,6 +30,10 @@ Network Destination        Netmask          Gateway       Interface  Metric
        11.11.11.0    255.255.255.0         On-link        11.11.11.2     11
 ...
 ===========================================================================
+Persistent Routes:
+  Network Address          Netmask  Gateway Address  Metric
+
+===========================================================================
 ```
 
 #### 3. Identify the interface that connects to the LAN by looking at the network destination for the `0.0.0.0` route. It should list the IP address of the LAN interface.
@@ -40,18 +44,18 @@ Network Destination        Netmask          Gateway       Interface  Metric
 ```
 route add <WAN network> mask <netmask> <WAN NIC IP address> -p
 ```
-For example, if the WAN network is `192.168.0.0/24`, the netmask is `255.255.255.0`, and the WAN NIC IP address is `192.168.1.1`, you would enter the following command:
+For example, if the WAN network is `10.122.224.0/24`, the netmask is `255.255.252.0`, and the WAN NIC IP address is `10.122.226.8`, you would enter the following command:
 ```
-route add 192.168.0.0 mask 255.255.255.0 192.168.1.1 -p
+route add 10.122.224.0 mask 255.255.252.0 10.122.226.8 -p
 ```
 
 #### 6. Enter the following command to add a route to the LAN network via the LAN NIC:
 ```
 route add <LAN network> mask <netmask> <LAN NIC IP address> -p
 ```
-For example, if the LAN network is `10.0.0.0/24`, the netmask is `255.255.255.0`, and the LAN NIC IP address is `10.0.0.1`, you would enter the following command:
+For example, if the LAN network is `11.11.11.0/24`, the netmask is `255.255.255.0`, and the LAN NIC IP address is `11.11.11.2`, you would enter the following command:
 ```
-route add 10.0.0.0 mask 255.255.255.0 10.0.0.1 -p
+route add 11.11.11.0 mask 255.255.255.0 11.11.11.2 -p
 ```
 Note that the `-p` flag is used to make the route permanent, so that it survives a reboot.
 
@@ -62,21 +66,6 @@ route print
 You should see the two new routes (in `Persistent Routes:`) listed in the routing table:
 ```
 C:\Users\Administrator>route print
-===========================================================================
-Interface List
-  2...2c 27 d7 2a 4b af ......Intel(R) 82579LM Gigabit Network Connection
- 12...60 32 b1 54 10 9e ......Realtek PCIe GbE Family Controller
-...
-===========================================================================
-
-IPv4 Route Table
-===========================================================================
-Active Routes:
-Network Destination        Netmask          Gateway       Interface  Metric
-...
-     10.122.224.0    255.255.252.0         On-link      10.122.226.8     21
-...
-       11.11.11.0    255.255.255.0         On-link        11.11.11.2     11
 ...
 ===========================================================================
 Persistent Routes:
@@ -86,8 +75,6 @@ Persistent Routes:
           0.0.0.0          0.0.0.0    10.122.224.38  Default
 ===========================================================================
 ...
-
-C:\Users\Administrator>
 ```
 
 By setting up static routes in this way, you can ensure that traffic is correctly routed between the LAN and WAN networks, without the need for multiple default gateways on the same machine.
