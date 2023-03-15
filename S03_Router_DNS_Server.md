@@ -68,6 +68,7 @@ Then rename the NIC to **"WAN"**.
 
 
 - ### Setting Up DNS Configuration on LAN NIC
+Enable **LAN NIC** and set the DNS configuration of IPv4 as follow:
 ```
 IP address:             11.11.11.1
 Subnet mask:            255.255.255.0
@@ -76,6 +77,7 @@ Default gateway:        [empty]
 Preferred DNS server:   127.0.0.1
 Alternate DNS server:   [empty]
 ```
+
 
 - ### Adding DHCP Server role to Server & Create New DHCP Scope Under IPv4
 Open **"Server Manager"**, add the **DHCP Server** role to the server.
@@ -158,7 +160,7 @@ Persistent Routes:
 
 #### 4. Determine the IP address of the router that connects to the WAN. You can obtain this information from the router's configuration settings.
 
-#### 5. Enter the following command to add a route to the WAN network via the WAN NIC:
+#### 5. Enter the following command to add a route to the WAN network via the WAN NIC: (May Not Necessary?! to be clarify)
 ```
 route add <WAN network> mask <netmask> <WAN NIC IP address> -p
 ```
@@ -190,10 +192,16 @@ Persistent Routes:
   Network Address          Netmask  Gateway Address  Metric
      10.122.224.0    255.255.252.0     10.122.226.8       1
        11.11.11.0    255.255.255.0       11.11.11.2       1
-          0.0.0.0          0.0.0.0    10.122.224.38  Default
 ===========================================================================
 ...
 ```
 
 By setting up static routes in this way, you can ensure that traffic is correctly routed between the LAN and WAN networks, without the need for multiple default gateways on the same machine.
 
+- ### Check Default Gateway on WAN DNS Configuration
+After setting up a static route, the value of default gateway on **WAN NIC** may become **empty**. If it happened, you have to enter the **IPv4** default gateway indicating the external router again (i.e. `10.122.224.38`).
+
+Open the command prompt, and run `route print`, you should a new gateway address 
+```
+0.0.0.0          0.0.0.0    10.122.224.38  Default
+```
