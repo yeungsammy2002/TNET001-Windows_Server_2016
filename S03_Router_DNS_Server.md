@@ -109,7 +109,11 @@ Leave the **"Lease Duration"** as default and that is **8 days**.
 - ### Configuring DHCP Scope
 Then configure the **DHCP Scope Options** under **"IPv4"** as follow:
 ```
-003 Router
+[v] 003 Router                  IP address:     11.11.11.1
+...
+[v] 006 DNS Servers             IP address:     11.11.11.1
+...
+[v] 015 DNS Domain Name         String value:   demo.com
 ```
 
 
