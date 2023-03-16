@@ -45,5 +45,36 @@ The share drive path will now include the domain when accessed by the domain use
 
 
 
-## 
+## Mapping Network Drive using Group Policy Preferences
+First of all, we need to create one **GPO**, and then we will define the settings. And after that, we will link that **GPO** to our **"HR" OU**.
 
+Open **"Server Manage"** -> **"Tools"** (top right menu) -> **"Group Policy Management"** ->
+
+On the ***left pane*** of the **Group Policy Managment MMC**, expand `mylab.local` -> expand **"Group Policy Objects"** -> 
+
+-> right-click the same **"Group Policy Objects"** -> **"New"** ->
+
+On the **"New GPO"** window, enter **"Map Network Drive Using Group Policy preference GPO"** to **"Name:"** field -> **"OK"**
+
+The **GPO** should be created sucessfully under **"Group Policy Object" container**. Now we need to define the setting as well, so let's click on **"Map Network Drive Using Group Policy preference GPO"** -> right-click on the same item -> **"Edit..."**
+
+On the ***left pane*** of the **"Group Policy Management Editor" MMC**, click on **"User Configuration"** -> 
+
+-> expand **"Preferences"** -> expand **"Windows Settings"** -> **"Drive Maps"** ->
+
+-> right-click on the same item -> **"New"** -> **"Mapped Drive"** ->
+
+On the **"General"** tab of **"New Drive Properties"** window, under the **"Action:"** field, select **"Create"** becasue we're going to create a new map drive. Under the **"Location:"** field, we need to specify the path of our share folder, in our case, `\\WS2K19-DC01\HRSharedData`. Under the **"Label as:"** field, enter **"TEST"**. Under the **"Drive Letter"** section, select the drive letter **"M"** ->
+
+Click on **"Common"** tab of **"New Drive Properties"** window, check the second checkbox that next to **"Run in logged-on user's security context (user policy option)"** ->
+
+-> check the last checkbox that next to **"Item-level targeting"** -> **"Targeting..."** button ->
+
+On the **"Targeting Editor"** window, click on **"New Item"**, here we have plenty of options. For the demonstration, we're going to use **"Security Group"** as a setting to define **Item-level targeting**, but here we have plenty of options that you can define the settings based on **"Operating System"**, or **"User"**, or **"IP Address Range"** and so on. Now on the top sub-window, here we can see **"the user is a member of the security group"**, then we need to define the name of the security group. Let's click on **"..."** button next to the **"Group:"** field.
+
+On the **"Select Group"** window, click on **"Advanced"** button -> **"Find Now"** button. In **"Search result:"** field, all groups are available from **Active Directory**. Here we need to select **"HRUsers"**
+
+# 18 - 6:10
+
+
+On the ***main pane*** of the same **MMC**
