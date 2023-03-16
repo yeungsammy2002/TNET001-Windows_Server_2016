@@ -329,7 +329,7 @@ Last name:  Hill
 Full name:  Paul Hill
 
 User logon name:
-paul.hill[@itflee.com]      // [...] is mandatory
+paul.hill[@itflee.com]      // [...] cannot be changed
 
 User logon name (pre-Windows 2000):
 ITFLEE\     paul.hill       // `paul.hill` is autofill
@@ -415,9 +415,12 @@ Back to the Active Directory Users and Computers MMC, click on **"itflee.com"** 
 
 
 # Groups and Memberships
-We're going to create groups and manage group memberships within Active Directory Users and Computers. We're going to a security group in **"itFlee" organizational units** that we've created before. So under **"itFlee" OU**, we have **"Domain Users" OU**, this is where we're going to create the group.
+We're going to create groups and manage group memberships within **Active Directory Users and Computers**. We're going to a security group in **"itFlee" organizational units** that we've created before. So under **"itFlee" OU**, we have **"Domain Users" OU**, this is where we're going to create the group.
 
-On the left pane of Active Directory Users and Computers MMC, click **"itflee.com"** -> **"ifFlee"** -> **"Domain Users"**, right-click the **"Domain Users" OU**, and we're going to choose **"New"** -> **"Group"**. A **"New Object - Group"** windows popped up, we're going to call this **"Sales"**:
+
+
+## Creating Group
+On the ***left pane*** of **Active Directory Users and Computers MMC**, click **"itflee.com"** -> **"ifFlee"** -> **"Domain Users"**, right-click the **"Domain Users" OU**, and we're going to choose **"New"** -> **"Group"**. A **"New Object - Group"** windows popped up, we're going to call this **"Sales"**:
 ```
 Group name:
 Sales
@@ -444,7 +447,7 @@ The **"Universal"** group scope is the same as **"Global"** except that the grou
 
 Most of the time, you'll want to leave the **"Global"** scope selected, and we're going to do it right now.
 
-Under the **"Group type"**, we have two options **"Security"** and **"Distribution"**. **"Security"** is for authentication, and **"Distribution"** is for email lists. So if we want to set up a security group, and say only people within the **"Sales"** group can have access to these folders in these files. They can only access these types of computers, these people can or cannot remote desktop into servers, that kind of stuff was what you'd specify with a security group.
+Under the **"Group type"**, we have two options **"Security"** and **"Distribution"**. **"Security"** is for authentication, and **"Distribution"** is for **email lists**. So if we want to set up a security group, and say only people within the **"Sales"** group can have access to these folders in these files. They can only access these types of computers, these people can or cannot remote desktop into servers, that kind of stuff was what you'd specify with a security group.
 
 The **"Distribution"** group type is only used when you have an **Exchange Server** setup on your network. We can create for example a **"IT Support"** group, we could create this **"Distribution"** group and when we added members to this group, someone could send an email to **"IT Support"**, and the email would be also sent to every member of this group.
 
