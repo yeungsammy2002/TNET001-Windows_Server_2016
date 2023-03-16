@@ -146,7 +146,7 @@ Network Destination        Netmask          Gateway       Interface  Metric
 ...
      10.122.224.0    255.255.252.0         On-link      10.122.226.8     21
 ...
-       11.11.11.0    255.255.255.0         On-link        11.11.11.2     11
+       11.11.11.0    255.255.255.0         On-link        11.11.11.1     11
 ...
 ===========================================================================
 Persistent Routes:
@@ -175,7 +175,7 @@ route add <LAN network> mask <netmask> <LAN NIC IP address> -p
 ```
 For example, if the LAN network is `11.11.11.0/24`, the netmask is `255.255.255.0`, and the LAN NIC IP address is `11.11.11.2`, you would enter the following command:
 ```
-route add 11.11.11.0 mask 255.255.255.0 11.11.11.2 -p
+route add 11.11.11.0 mask 255.255.255.0 11.11.11.1 -p
 ```
 Note that the `-p` flag is used to make the route permanent, so that it survives a reboot.
 
@@ -191,7 +191,7 @@ C:\Users\Administrator>route print
 Persistent Routes:
   Network Address          Netmask  Gateway Address  Metric
      10.122.224.0    255.255.252.0     10.122.226.8       1
-       11.11.11.0    255.255.255.0       11.11.11.2       1
+       11.11.11.0    255.255.255.0       11.11.11.1       1
 ===========================================================================
 ...
 ```
