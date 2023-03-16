@@ -30,7 +30,9 @@ $firstname = "John"
 ```
 
 
+
 ## Pass Information into Active Directory
+
 
 - ### Import Active Directory Module: `Import-Module ActiveDirectory`
 We can pass informations onto Active Directory. To do this, the first thing we want to do is import a module called `ActiveDirectory` by using `Import-Module` command:
@@ -43,6 +45,7 @@ PS C:\Users\Administrator> Import-Module ActiveDirectory
 
 PS C:\Users\Administrator> 
 ```
+
 
 - ### Create New OU & Find its OU Path
 We're going to create a new organizational unit for the ***PowerShell* users**, so we expand `itflee.com` on the ***left pane***, and right-click `itflee.com`. Then click **"New"** -> **"Organizational Unit"**, a **"New Object - Organizational Unit" window** popped up, we're going to call this **"PowerShellUsers"** (in **"Name:"** field), then click **"OK"**.

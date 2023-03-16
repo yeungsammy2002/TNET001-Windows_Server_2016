@@ -3,7 +3,7 @@
 
 
 
-# Configuring Home Folders for AD User Accounts
+# Configuring Personal Home Folders for AD User Accounts
 We're going to configure home folders for Active Directory user accounts. Home folders and my documents make it easier for an administrator to backup user's files and manage user accounts by collecting the user's files in one location. If you assign a home folder to a user, you can store the user data in a central location on a server, and make backup and recovery of data easier and more reliable.
 
 
@@ -165,6 +165,3 @@ In a client computer, let's login with the `Mike Terry` account. On the desktop,
 
 
 
-# Setup Roaming User Profile
-
-# 10
