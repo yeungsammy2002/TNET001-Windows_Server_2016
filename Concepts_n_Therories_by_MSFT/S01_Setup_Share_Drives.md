@@ -84,7 +84,7 @@ Drive Maps
 ```
 So we're successfully define the settings to create a map drive on a client computer. We've define the settings as well for **Item-level targeting**. Now we can close the **"Group Policy Management Editor" MMC**.
 
-Now we can link our newly created **GPO**. Back to the **"Group Policy Management" MMC**, expand the **"MUMBAI"** folder:
+Now we can link our newly created **GPO**. Back to the ***left pane*** of **"Group Policy Management" MMC**, expand the **"MUMBAI"** folder:
 ```
 Group Policy Management
     Forest: mylab.local
@@ -93,7 +93,7 @@ Group Policy Management
                 Default Domain Policy (link)
               > Domain Controllers
                 MUMBAI
-                    HR
+                    HR              // right-click
                   > HRComputers
                   > TECH
                 Group Policy Objects
@@ -109,8 +109,18 @@ Group Policy Management
             Group Policy Modeling
             Group Policy Results
 ```
-Let's right-click on **`HR` OU**, select **"Link an Existing GPO..."**. A **"Select GPO"** window popped up, on the **"Group Policy objects:"** field, select **"Map Network Drive Using Group Policy preferences GPO"**, then click **"OK"**.
+Let's right-click on **`HR` OU**, select **"Link an Existing GPO..."**. A **"Select GPO"** window popped up, on the **"Group Policy objects:"** field, select **"Map Network Drive Using Group Policy preferences GPO"**, then click **"OK"**. 
 
-
+In the the **"HR"** on the ***left pane***, you should see something like this:
+```
+...
+                MUMBAI
+                    HR
+                        Map Network Drive Using Group Policy preference GPO
+                  > HRComputers
+                  > TECH
+...
+```
+Now we have successfully created a **GPO**, we've defined the setting, and then we've link the **GPO** to **"HR" OU** as well. Let's test the result. We're going to login as `hr.user1`. On **"This PC"** window, you should see the map drive called **"TEST (M:)"** with drive letter **"M:"** on the **"Network locations"** section. That means that policy successfully applied on our user.
 
 
