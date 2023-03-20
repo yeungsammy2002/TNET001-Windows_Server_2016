@@ -76,10 +76,41 @@ On the **"Select Group"** window, click on **"Advanced"** button -> **"Find Now"
 
 Back to the **"Targeting Editor"** window, here you can see the **"the user is a member of the security group MYLAB\HRUsers"**. The policy will be applied to that user accounts, click on **"OK"**. Back to **"New Drive Properties"** window, click on **"Apply"** button, it'll be renamed to **"M: Properties"**, then click on **"OK"**.
 
-Back to the **"Group Policy Management Editor" MMC**, we'll see something like 
+Back to the ***main pane*** of the **"Group Policy Management Editor" MMC**, we'll see something like:
+```
+Drive Maps
+    Name        Order   Action      Path                            Reconnect
+    M:          1       Create      \\WS2K19-DC01\HRShare...        No
+```
+So we're successfully define the settings to create a map drive on a client computer. We've define the settings as well for **Item-level targeting**. Now we can close the **"Group Policy Management Editor" MMC**.
 
-# 18 - 6:29
+Now we can link our newly created **GPO**. Back to the **"Group Policy Management" MMC**, expand the **"MUMBAI"** folder:
+```
+Group Policy Management
+    Forest: mylab.local
+        Domains
+            mylab.local
+                Default Domain Policy (link)
+              > Domain Controllers
+                MUMBAI
+                    HR
+                  > HRComputers
+                  > TECH
+                Group Policy Objects
+                    Default Domain Controllers Policy
+                    Default Domain Policy
+                    Folder Redirection GPO
+                    Map Network Drive Logon Script GPO
+                    Map Network Drive Using Group Policy preferences GPO
+                    Software Deployment Google Chrome GPO
+              > WMI Filters
+              > Starter GPOs
+          > Sites
+            Group Policy Modeling
+            Group Policy Results
+```
+Let's right-click on **`HR` OU**, select **"Link an Existing GPO..."**. A **"Select GPO"** window popped up, on the **"Group Policy objects:"** field, select **"Map Network Drive Using Group Policy preferences GPO"**, then click **"OK"**.
 
 
 
-On the ***main pane*** of the same **MMC**
+
