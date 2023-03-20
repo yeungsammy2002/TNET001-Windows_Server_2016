@@ -2,7 +2,7 @@
 
 
 
-## Creating Folder and Setting Up Share Drive
+## Creating Folder and Setting Up Share Drive by `MSFT`
 To create a share drive that include the domain in the share drive path, you need to follow these steps:
 
 1. Create a folder that is going to be the share drive.
@@ -45,7 +45,7 @@ The share drive path will now include the domain when accessed by the domain use
 
 
 
-## Mapping Network Drive using Group Policy Preferences
+## Mapping Network Drive using Group Policy Preferences by `MSFT`
 First of all, we need to create one **GPO**, and then we will define the settings. And after that, we will link that **GPO** to our **"HR" OU**.
 
 Open **"Server Manage"** -> **"Tools"** (top right menu) -> **"Group Policy Management"** ->
@@ -124,3 +124,38 @@ In the the **"HR"** on the ***left pane***, you should see something like this:
 Now we have successfully created a **GPO**, we've defined the setting, and then we've link the **GPO** to **"HR" OU** as well. Let's test the result. We're going to login as `hr.user1`. On **"This PC"** window, you should see the map drive called **"TEST (M:)"** with drive letter **"M:"** on the **"Network locations"** section. That means that policy successfully applied on our user.
 
 
+
+## Distributed File System by `itdvds.com`
+Source: `https://www.youtube.com/watch?v=yDvbOsJIFpE`
+
+```mermaid
+classDiagram
+    class DFSdomain {
+        \\itdvdscorp.com\Corp\CompanyDocs
+    }
+
+    class DFS01 {
+        DFS01.itdvdscorp.com
+        DFS Namespace: Corp
+        Path: (C:\CompanyDocs)
+    }
+
+    class DFS02 {
+        DFS02.itdvdscorp.com
+        DFS Namespace: Corp
+        Path: (C:\CompanyDocs)
+    }
+
+
+    Internet <-- DFSdomain
+
+    DFSdomain <-- DFS01
+    DFSdomain <-- DFS02
+    
+    DFS02 <-- DFS01 : DFSR Replication
+    DFS01 <-- DFS02 : DFSR Replication
+```
+
+There are two parts of **DFS** that can be used separately or together. 
+- The first is the **namespace part**. That's where we create a namespace like `Corp`, which we're going to create. So that it's access via `\\[domain]\[namespace]`.
+- Another part is the **DFS replication**, which we can use to replicate two folders that are on two different servers.
