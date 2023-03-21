@@ -125,7 +125,7 @@ Now we have successfully created a **GPO**, we've defined the setting, and then 
 
 
 
-## Distributed File System by `itdvds.com`
+# Distributed File System (DFS) by `itdvds.com`
 Source: `https://www.youtube.com/watch?v=yDvbOsJIFpE`
 
 ```mermaid
@@ -159,3 +159,59 @@ classDiagram
 There are two parts of **DFS** that can be used separately or together. 
 - The first is the **namespace part**. That's where we create a namespace like `Corp`, which we're going to create. So that it's access via `\\[domain]\[namespace]`.
 - Another part is the **DFS replication**, which we can use to replicate two folders that are on two different servers.
+
+In this example, we're going to have a folder on a `C:` drive of both `DFS01` and `DFS02` called `CompanyDocs`. There is going to be replication that occurs, so that those two folders are always the same.
+
+We're going to create a ***namespace*** called `Corp`, and create a ***folder target*** called `CompanyDocs`. So that when a user try to access `\\itdvdscorp.com\Corp\CompanyDocs`, then they'll hit either `DFS01` or `DFS02`, and have access to the `CompanyDocs` folder that will have documents inside of it that will being replicated, so that they're always the same.
+
+
+
+## Installing DFS Namespace & DFS Replication Roles on Server
+Open the **"Server Manager"**, on ***left pane***, click **"All Servers"**. Then on **"SERVERS"** section of the ***main pane***, we have 3 servers listed as follow:
+```
+Server Name         IPv4 Address    Manageability                                   Last Updated
+DFS01               192.168.6.207   Online - Pereformance counters not started      10/31/2017 9:...
+DFS02               192.168.6.208   Online - Pereformance counters not started      10/31/2017 9:...
+WIN-GMF0E73U8CH     192.168.6.210   Online - Pereformance counters not started      10/31/2017 9:...
+```
+First, we need to install **DFS** on **"DFS01"** and **"DFS02"**. Right-click `DFS01` on that main pane, then click **"Add Roles and Features"**.
+
+On **"Add Roles and Features Wizard"** window, continue through the prompt until it reached **"Server Roles"** tab ->
+
+-> On the "Roles" field, expand **"File and Storage Services (x of 12 installed)"** ->
+
+-> expand **"File and iSCSI Services (x of 11 installed)"** ->
+
+-> check both **"DFS Namespace"** and **"DFS Replication"** checkbox ->
+
+-> continue through the prompt until it finished.
+
+
+### Create Namespace
+Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top right menu, click **"Tools"** -> **"DFS Management"** ->
+
+-> on the ***left pane*** of the **"DFS Management" MMC**, right-click **"Namespaces"** -> click **"New Namespaces..."** ->
+
+-> on the first page of the **"New Namespace Wizard"** window, enter **"DFS01"** in **"Server:"** field ->
+
+-> on the **"Namespace Server"** tab, enter **"Corp"** in the **"Name:"** field, and leave the default permissions ->
+
+-> on the **"Namespace Name and Settings"** tab, select **"Domain-based namespace"** option -> check "Enable Windows Server 2008 mode" ->
+
+-> **"Preview of domain-based namespace:"** field should be `\\itdvdscorp.com\Corp` ->
+
+-> Continue through the prompt until it finished.
+
+Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> click **"\\itdvdscorp.com\Corp"**
+
+
+
+### Installing DFS Namespace & DFS Replication Roles through PowerShell
+We could also do exactly the same thing in ***PowerShell***:
+```
+PS C:\Windows\system32> enter-pssession dfs01
+[dfs01]: PS C:\Users\ssmith\Documents> Install-WindowsFeature FS-FileServer, FS-DFS-Namespace, FS-DFS-Replication -IncludeManagementTools
+```
+`pssession` means ***PowerShell session***.
+
+
