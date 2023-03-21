@@ -254,7 +254,7 @@ DFS01
 -> `\\itdvdscorp.com\Corp\CompanyDocs` should be seen in the **"Preview of namespace:"** field -> **"OK"**
 
 
-Back to **"DFS Management" MMC**, expand `\\itdvdscorp.com\Corp`, you should see something like this:
+Back to the ***left pane*** of the **"DFS Management" MMC**, expand `\\itdvdscorp.com\Corp`, you should see something like this:
 ```
 DFS Management
     Namespaces
@@ -265,7 +265,97 @@ DFS Management
 ```
 Now we should be able to access the share folder on `DFS01` through `\\itdvdscorp.com\Corp\CompanyDocs`.
 
-Let's replicate this file over to `DFS02` and add `DFS02` as a folder target as well.
+
+### Create Replication
+Let's replicate this file over to `DFS02` and add `DFS02` as a folder target as well. We're going to create ***DFS Replication*** from `C:\CompanyDocs` on `DFS01` to `C:\CompanyDocs` on `DFS02`. The paths don't have to be exactly the same.
+
+Let's right-click on **"`> Replication`"** on the ***left pane*** of the **"DFS Management" MMC** -> **"New Replication Group..."** ->
+
+-> on the **"Replication Group Type"** tab of the **"New Replication Group Wizard"** window, select **"Multipurpose replication group"** ->
+
+-> on the **"Name and Domain"** tab, enter **"CompanyDocs"** in the **"Name of replcation group:"** field, keep everything as default ->
+
+-> on the **"Replication Group Members"** tab, click **"Add..."** button ->
+
+-> on the **"Select Computers"** window, enter **"DFS01"** in the **"Enter the object names to select (examples):"** field -> **"OK"** ->
+
+-> Back to the **"Replication Group Members"** tab, click **"Add..."** button again ->
+
+-> on the **"Select Computers"** window, enter **"DFS02"** in the **"Enter the object names to select (examples):"** field -> **"OK"** ->
+
+-> on the **"Replication Group Members"** tab, you should see something like this in the **"Members:"** field:
+```
+Server      Domain
+DFS01       itdvdscorp.com
+DFS02       itdvdscorp.com
+```
+-> on the **"Topology Selection"** tab, select **"Full mesh"** option ->
+
+-> on the **"Replication Group Schedule and Bandwidth"** tab, select **"Replicate continuously using the specified bandwidth"** with **"Full"** option ->
+
+-> on the **"Primary Member"** tab, select **"DFS01"** ->
+
+-> on the **"Folders to Replicate"** tab, click **"Add..."** button ->
+
+-> on the **"Add Folder to Replicate"** tab, click **"Browse..."** ->
+
+-> on the "Browse For Folder" tab, select **"CompanyDocs"** as below:
+```
+DFS01.itdvdscorp.com
+    C$
+      > $RECYCLE.BIN
+        CompanyDocs
+            Forms
+      > DFSRoots
+      > Documents and Settings (link)
+      ...  
+```
+-> click **"OK"** or **"Next"** until it reach -> **"Local Path of CompanyDocs on Other Members"** tab ->
+
+-> on **"Local Path of CompanyDocs on Other Members"** tab, click **"Edit..."** button ->
+
+-> on **"Edit"** window, select **"Enabled"** -> **"Browse..."** button on **"Local path of folder:"** ->
+
+-> on **"Browse For Folder"** window, we've not created a folder on `DFS02` yet, so click **"Make New Folder"** button ->
+
+-> enter **"CompanyDocs"** -> **"OK"** ->
+
+-> continue through the prompt until it finished
+
+The replication group should be created successfully, we can check that by entering the path `\\dfs02\c$\CompanyDocs`, you should see all the files and folders from `\\dfs01\c$\CompanyDocs` should be replicated inside this folder. If we create a text file inside `\\dfs01\c$\CompanyDocs`, you should see this text file will be replicated to `\\dfs02\c$\CompanyDocs`.
+
+
+- ### Create `DFS02` Folder Target 
+Now we need to add `DFS02` as a ***folder target*** as well. So go back to the ***left pane*** of the **"DFS Management" MMC**:
+
+click **"CompanyDocs"** link -> right-click the same item -> **"Add Folder Target..."** ->
+
+-> on **"New Folder Target"** window, click **"Browse..."** in **"Path to folder target:"** field ->
+
+-> on **"Browse for Shared Folders"** window, enter **"DFS02"** in the **"Server:"** field -> **"Show Shared Folders"** button ->
+
+-> it's not currently share out, we need to create that, click **"New Shared Folder...**" ->
+
+-> on **"Create Share"** window, enter **"Company Docs"** in **"Share name:"** field -> **"Browse..."** in **"Local path of shared folder:"** ->
+
+-> on **"Browse For Folder"** window, select **"Company Docs"** like this:
+```
+DFS02
+    c$
+        CompanyDocs     // select this
+            Forms
+      > DFSRoots
+        HRForms
+        PerfLogs
+        ...
+```
+-> **"OK"** ->
+
+-> on **"Create Share"** window, select **"All users have read and write permissions"** option, same as `DFS01` -> **"OK"**
+
+-> click **"OK"** to close all the windows ->
+
+-> it may ask ***"Do you want to create a replication group?"***, click **"No"**
 
 
 ### Installing DFS Namespace & DFS Replication Roles through PowerShell
