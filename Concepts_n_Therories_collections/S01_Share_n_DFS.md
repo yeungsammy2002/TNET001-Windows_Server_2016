@@ -125,6 +125,7 @@ Now we have successfully created a **GPO**, we've defined the setting, and then 
 
 
 
+
 # Distributed File System (DFS) by `itdvds.com`
 Source: `https://www.youtube.com/watch?v=yDvbOsJIFpE`
 
@@ -190,7 +191,7 @@ On **"Add Roles and Features Wizard"** window, continue through the prompt until
 ### Create Namespace
 Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top right menu, click **"Tools"** -> **"DFS Management"** ->
 
--> on the ***left pane*** of the **"DFS Management" MMC**, right-click **"Namespaces"** -> click **"New Namespaces..."** ->
+-> on the ***left pane*** of the **"DFS Management" MMC**, right-click **"Namespaces"** -> **"New Namespaces..."** ->
 
 -> on the first page of the **"New Namespace Wizard"** window, enter **"DFS01"** in **"Server:"** field ->
 
@@ -202,8 +203,69 @@ Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top 
 
 -> Continue through the prompt until it finished.
 
-Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> click **"\\itdvdscorp.com\Corp"**
 
+Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> **"\\itdvdscorp.com\Corp"** ->
+
+-> right-click the same item -> **"Add Namespace Server..."** ->
+
+-> on **"Add Namespace Server"** window, enter **"DFS02"** in the **"Namespace server:"** -> **"OK"**
+
+On the **"Namespace Servers"** tab of the ***main pane*** of **"DFS Management" MMC** while `\\itdvdscorp.com\Corp` is highlighted on the ***left pane***, you should there are two namespace servers:
+```
+Type            Referral Status     Site        Path
+(folder icon)   Enabled             Phoenix     \\DFS01.itdvdscorp.com
+(folder icon)   Enabled             Phoenix     \\DFS02.itdvdscorp.com
+```
+We're going to add a folder target here. If we go to `DFS01`, we can see the path `\\dfs01\c$\CompanyDocs`.
+
+
+Back to **"DFS Management" MMC**, right-click `\\itdvdscorp.com\Corp` -> **"New Folder..."** ->
+
+-> on the **"New Folder"** window, click **"Add..."** button ->
+
+-> on the **"Add Folder Target"** window, click **"Browse..."** button ->
+
+-> on the **"Browse for Shared Folders"** window, enter **"DFS01"** in **"Server:"** field -> **"Show Shared Folders"** button
+
+-> on the **"Shared folders:"** field, it's not currently shared out, click on **"New Shared Folder..."** button ->
+
+-> on the **"Create Share"** window, enter **"Company Docs"** in the **"Share name:"** field ->
+
+-> **"Browse..."** button in the **"Local path of shared folder:"** field ->
+
+-> on the **"Browse For Folder"** window, select the **"Company Docs"** folder:
+```
+DFS01
+    c$
+      > $RECYCLE.BIN
+        CompanyDocs
+            Forms
+      > DFSRoots
+      > Documents and Settigns (link)
+        Perflogs
+        ...
+```
+-> **"OK"** ->
+
+-> Back to **"Create Share"** window, select **"All users have read and write permissions"** -> **"OK"**
+
+-> Click **"OK"** close all the windows until it reach **"New Folder"** window -> enter **"CompanyDoc"** in the **"Name:"** ->
+
+-> `\\itdvdscorp.com\Corp\CompanyDocs` should be seen in the **"Preview of namespace:"** field -> **"OK"**
+
+
+Back to **"DFS Management" MMC**, expand `\\itdvdscorp.com\Corp`, you should see something like this:
+```
+DFS Management
+    Namespaces
+        \\itdvdscorp.com\Corp
+            CompanyDocs (link)
+        \\itdvdscorp.com\humanresources
+  > Replication
+```
+Now we should be able to access the share folder on `DFS01` through `\\itdvdscorp.com\Corp\CompanyDocs`.
+
+Let's replicate this file over to `DFS02` and add `DFS02` as a folder target as well.
 
 
 ### Installing DFS Namespace & DFS Replication Roles through PowerShell
