@@ -3,30 +3,6 @@
 
 
 
-# Add Server to Domain Network
-Open **"Server Manager"** window, on the top right bar, click **"Manage"** -> **"Add Servers"** ->
-
--> on **"Add Servers"** window, under **"Active Directory"**, click **"Find Now"** button ->
-
--> you should a list of computers that joined your domain:
-```
-Name        Operating System
-demodc      Windows Server 2016 Standard
-user1       Windows 10 Professional
-DFS01       Windows Server 2016 Standard
-```
--> select `DFS01` -> **"|>"** -> **"OK"** ->
-
--> back to **"Server Manager"** window, you should see `DFS01` on the **"SERVERS"** list:
-```
-Server Name     IPv4 Address                Manageability                               Last Update
-DEMODC          10.122.226.8,11.11.11.1     Online - Performance counters not started   ...
-DFS01           11.11.11.22                 Online - Performance counters not started   ...
-```
-
-
-
-
 # Distributed File System (DFS) by `itdvds.com`
 Source: `https://www.youtube.com/watch?v=yDvbOsJIFpE`
 
@@ -65,6 +41,29 @@ There are two parts of **DFS** that can be used separately or together.
 In this example, we're going to have a folder on a `C:` drive of both `DFS01` and `DFS02` called `CompanyDocs`. There is going to be replication that occurs, so that those two folders are always the same.
 
 We're going to create a ***namespace*** called `Corp`, and create a ***folder target*** called `CompanyDocs`. So that when a user try to access `\\itdvdscorp.com\Corp\CompanyDocs`, then they'll hit either `DFS01` or `DFS02`, and have access to the `CompanyDocs` folder that will have documents inside of it that will being replicated, so that they're always the same.
+
+
+
+## Add Server to Domain Network
+Open **"Server Manager"** window, on the top right bar, click **"Manage"** -> **"Add Servers"** ->
+
+-> on **"Add Servers"** window, under **"Active Directory"**, click **"Find Now"** button ->
+
+-> you should a list of computers that joined your domain:
+```
+Name        Operating System
+demodc      Windows Server 2016 Standard
+user1       Windows 10 Professional
+DFS01       Windows Server 2016 Standard
+```
+-> select `DFS01` -> **"|>"** -> **"OK"** ->
+
+-> back to **"Server Manager"** window, you should see `DFS01` on the **"SERVERS"** list:
+```
+Server Name     IPv4 Address                Manageability                               Last Update
+DEMODC          10.122.226.8,11.11.11.1     Online - Performance counters not started   ...
+DFS01           11.11.11.22                 Online - Performance counters not started   ...
+```
 
 
 
