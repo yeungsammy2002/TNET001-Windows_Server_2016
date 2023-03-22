@@ -67,6 +67,20 @@ In this example, we're going to have a folder on a `C:` drive of both `DFS01` an
 We're going to create a ***namespace*** called `Corp`, and create a ***folder target*** called `CompanyDocs`. So that when a user try to access `\\itdvdscorp.com\Corp\CompanyDocs`, then they'll hit either `DFS01` or `DFS02`, and have access to the `CompanyDocs` folder that will have documents inside of it that will being replicated, so that they're always the same.
 
 
+## Installing DFS Management Tools Features on Domain Controller
+Open the **"Server Manager"** window, on top right menu bar, click **"Manage"** -> **"Add Roles and Features"** ->
+
+-> continue the prompt until you reach **"Features"** section ->
+
+-> on **"Features"** field, expand **"Remote Server Administration Tools"** ->
+
+-> expand **"Remote Server Administration Tools"** -> expand **"Role Administration Tools"** ->
+
+-> expand **"File Services Tools"** -> check **"DFS Management Tools"** checkbox ->
+
+-> continue through the prompt until you finished
+
+
 
 ## Installing DFS Namespace & DFS Replication Roles on Server
 Open the **"Server Manager"**, on ***left pane***, click **"All Servers"**. Then on **"SERVERS"** section of the ***main pane***, we have 3 servers listed as follow:
