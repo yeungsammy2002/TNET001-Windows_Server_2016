@@ -67,6 +67,7 @@ In this example, we're going to have a folder on a `C:` drive of both `DFS01` an
 We're going to create a ***namespace*** called `Corp`, and create a ***folder target*** called `CompanyDocs`. So that when a user try to access `\\itdvdscorp.com\Corp\CompanyDocs`, then they'll hit either `DFS01` or `DFS02`, and have access to the `CompanyDocs` folder that will have documents inside of it that will being replicated, so that they're always the same.
 
 
+
 ## Installing DFS Management Tools Features on Domain Controller
 Open the **"Server Manager"** window, on top right menu bar, click **"Manage"** -> **"Add Roles and Features"** ->
 
