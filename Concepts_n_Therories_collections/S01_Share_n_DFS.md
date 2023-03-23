@@ -166,7 +166,7 @@ DFS01
 
 -> Back to **"Create Share"** window, select **"All users have read and write permissions"** -> **"OK"**
 
--> Click **"OK"** close all the windows until it reach **"New Folder"** window -> enter **"CompanyDoc"** in the **"Name:"** ->
+-> Click **"OK"** close all the windows until it reach **"New Folder"** window -> enter **"CompanyDocs"** in the **"Name:"** ->
 
 -> `\\itdvdscorp.com\Corp\CompanyDocs` should be seen in the **"Preview of namespace:"** field -> **"OK"**
 
@@ -214,14 +214,14 @@ DFS02       itdvdscorp.com
 
 -> on the **"Folders to Replicate"** tab, click **"Add..."** button ->
 
--> on the **"Add Folder to Replicate"** tab, click **"Browse..."** ->
+-> on the **"Add Folder to Replicate"** window, click **"Browse..."** ->
 
--> on the **"Browse For Folder"** tab, select **"CompanyDocs"** as below:
+-> on the **"Browse For Folder"** tab, select **"Company Docs"** as below:
 ```
 DFS01.itdvdscorp.com
     C$
       > $RECYCLE.BIN
-        CompanyDocs         // select this
+        Company Docs         // select this
             Forms
       > DFSRoots
       > Documents and Settings (link)
@@ -235,7 +235,7 @@ DFS01.itdvdscorp.com
 
 -> on **"Browse For Folder"** window, we've not created a folder on `DFS02` yet, so click **"Make New Folder"** button ->
 
--> enter **"CompanyDocs"** -> **"OK"** ->
+-> enter **"Company Docs"** -> **"OK"** ->
 
 -> continue through the prompt until it finished
 
@@ -245,7 +245,7 @@ The replication group should be created successfully, we can check that by enter
 ### Create `DFS02` Folder Target 
 Now we need to add `DFS02` as a ***folder target*** as well. So go back to the ***left pane*** of the **"DFS Management" MMC**:
 
-click **"CompanyDocs"** link -> right-click the same item -> **"Add Folder Target..."** ->
+click **"Company Docs"** link -> right-click the same item -> **"Add Folder Target..."** ->
 
 -> on **"New Folder Target"** window, click **"Browse..."** in **"Path to folder target:"** field ->
 
@@ -259,7 +259,7 @@ click **"CompanyDocs"** link -> right-click the same item -> **"Add Folder Targe
 ```
 DFS02
     c$
-        CompanyDocs     // select this
+        Company Docs     // select this
             Forms
       > DFSRoots
         HRForms
