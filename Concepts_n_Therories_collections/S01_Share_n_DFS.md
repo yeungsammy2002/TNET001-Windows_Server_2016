@@ -146,11 +146,11 @@ Back to **"DFS Management" MMC**, right-click `\\itdvdscorp.com\Corp` -> **"New 
 
 -> on the **"Shared folders:"** field, it's not currently shared out, click on **"New Shared Folder..."** button ->
 
--> on the **"Create Share"** window, enter **"Company Docs"** in the **"Share name:"** field ->
+-> on the **"Create Share"** window, enter **"CompanyDocs"** in the **"Share name:"** field ->
 
 -> **"Browse..."** button in the **"Local path of shared folder:"** field ->
 
--> on the **"Browse For Folder"** window, select the **"Company Docs"** folder:
+-> on the **"Browse For Folder"** window, select the **"CompanyDocs"** folder:
 ```
 DFS01
     c$
@@ -216,12 +216,12 @@ DFS02       itdvdscorp.com
 
 -> on the **"Add Folder to Replicate"** window, click **"Browse..."** ->
 
--> on the **"Browse For Folder"** tab, select **"Company Docs"** as below:
+-> on the **"Browse For Folder"** tab, select **"CompanyDocs"** as below:
 ```
 DFS01.itdvdscorp.com
     C$
       > $RECYCLE.BIN
-        Company Docs         // select this
+        CompanyDocs         // select this
             Forms
       > DFSRoots
       > Documents and Settings (link)
@@ -235,7 +235,7 @@ DFS01.itdvdscorp.com
 
 -> on **"Browse For Folder"** window, we've not created a folder on `DFS02` yet, so click **"Make New Folder"** button ->
 
--> enter **"Company Docs"** -> **"OK"** ->
+-> enter **"CompanyDocs"** -> **"OK"** ->
 
 -> continue through the prompt until it finished
 
@@ -245,7 +245,7 @@ The replication group should be created successfully, we can check that by enter
 ### Create `DFS02` Folder Target 
 Now we need to add `DFS02` as a ***folder target*** as well. So go back to the ***left pane*** of the **"DFS Management" MMC**:
 
-click **"Company Docs"** link -> right-click the same item -> **"Add Folder Target..."** ->
+click **"CompanyDocs"** link -> right-click the same item -> **"Add Folder Target..."** ->
 
 -> on **"New Folder Target"** window, click **"Browse..."** in **"Path to folder target:"** field ->
 
@@ -253,13 +253,13 @@ click **"Company Docs"** link -> right-click the same item -> **"Add Folder Targ
 
 -> it's not currently share out, we need to create that, click **"New Shared Folder...**" ->
 
--> on **"Create Share"** window, enter **"Company Docs"** in **"Share name:"** field -> **"Browse..."** in **"Local path of shared folder:"** ->
+-> on **"Create Share"** window, enter **"CompanyDocs"** in **"Share name:"** field -> **"Browse..."** in **"Local path of shared folder:"** ->
 
--> on **"Browse For Folder"** window, select **"Company Docs"** like this:
+-> on **"Browse For Folder"** window, select **"CompanyDocs"** like this:
 ```
 DFS02
     c$
-        Company Docs     // select this
+        CompanyDocs     // select this
             Forms
       > DFSRoots
         HRForms
