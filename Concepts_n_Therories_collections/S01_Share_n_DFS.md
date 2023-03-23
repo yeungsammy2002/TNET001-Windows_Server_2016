@@ -105,6 +105,7 @@ On **"Add Roles and Features Wizard"** window, continue through the prompt until
 -> continue through the prompt until it finished.
 
 
+
 ## Create Namespace
 Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top right menu, click **"Tools"** -> **"DFS Management"** ->
 
@@ -121,6 +122,8 @@ Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top 
 -> Continue through the prompt until it finished.
 
 
+
+## Add Namespace Server to Existing Namespace
 Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> **"\\itdvdscorp.com\Corp"** ->
 
 -> right-click the same item -> **"Add Namespace Server..."** ->
@@ -136,6 +139,8 @@ Type            Referral Status     Site        Path
 We're going to add a folder target here. If we go to `DFS01`, we can see the path `\\dfs01\c$\CompanyDocs`.
 
 
+
+## Create Share Folder
 Back to **"DFS Management" MMC**, right-click `\\itdvdscorp.com\Corp` -> **"New Folder..."** ->
 
 -> on the **"New Folder"** window, click **"Add..."** button ->
@@ -181,6 +186,7 @@ DFS Management
   > Replication
 ```
 Now we should be able to access the share folder on `DFS01` through `\\itdvdscorp.com\Corp\CompanyDocs`.
+
 
 
 ## Create Replication
