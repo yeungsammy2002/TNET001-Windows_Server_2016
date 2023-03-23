@@ -275,6 +275,10 @@ DFS02
 -> it may ask ***"Do you want to create a replication group?"***, click **"No"**
 
 
+### Delete Shared Folders
+Beware that you have to delete all the replication group and link through **"DFS Management" MMC** before you delete the shared folders for replication.
+
+
 ### Installing DFS Namespace & DFS Replication Roles through PowerShell
 We could also do exactly the same thing in ***PowerShell***:
 ```
