@@ -105,7 +105,7 @@ On **"Add Roles and Features Wizard"** window, continue through the prompt until
 -> continue through the prompt until it finished.
 
 
-### Create Namespace
+## Create Namespace
 Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top right menu, click **"Tools"** -> **"DFS Management"** ->
 
 -> on the ***left pane*** of the **"DFS Management" MMC**, right-click **"Namespaces"** -> **"New Namespaces..."** ->
@@ -183,7 +183,7 @@ DFS Management
 Now we should be able to access the share folder on `DFS01` through `\\itdvdscorp.com\Corp\CompanyDocs`.
 
 
-### Create Replication
+## Create Replication
 Let's replicate this file over to `DFS02` and add `DFS02` as a folder target as well. We're going to create ***DFS Replication*** from `C:\CompanyDocs` on `DFS01` to `C:\CompanyDocs` on `DFS02`. The paths don't have to be exactly the same.
 
 Let's right-click on **"`> Replication`"** on the ***left pane*** of the **"DFS Management" MMC** -> **"New Replication Group..."** ->
@@ -242,7 +242,7 @@ DFS01.itdvdscorp.com
 The replication group should be created successfully, we can check that by entering the path `\\dfs02\c$\CompanyDocs`, you should see all the files and folders from `\\dfs01\c$\CompanyDocs` should be replicated inside this folder. If we create a text file inside `\\dfs01\c$\CompanyDocs`, you should see this text file will be replicated to `\\dfs02\c$\CompanyDocs`.
 
 
-### Create `DFS02` Folder Target 
+## Create `DFS02` Folder Target 
 Now we need to add `DFS02` as a ***folder target*** as well. So go back to the ***left pane*** of the **"DFS Management" MMC**:
 
 click **"CompanyDocs"** link -> right-click the same item -> **"Add Folder Target..."** ->
