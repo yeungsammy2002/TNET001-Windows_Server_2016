@@ -198,6 +198,7 @@ Persistent Routes:
 
 By setting up static routes in this way, you can ensure that traffic is correctly routed between the LAN and WAN networks, without the need for multiple default gateways on the same machine.
 
+
 - ### Check Default Gateway on WAN DNS Configuration
 After setting up a static route, the value of default gateway on **WAN NIC** may become **empty**. If it happened, you have to enter the **IPv4** default gateway indicating the external router again (i.e. `10.122.224.38`).
 
