@@ -1,4 +1,7 @@
 # Section 01 - Setting Up Share Drives
+**#Before doing any DFS related operations, make sure you have already updated your OS to the latest version of Windows Server 2016.**
+
+Otherwise, you may unable to search peer servers within your network, and you may encounter ***"Value does not fall within the expected range"* error**. This error is a bug that caused by `.NET Framework 4.7` installed on the OS.
 
 
 
@@ -33,7 +36,6 @@ classDiagram
     DFS02 <-- DFS01 : DFSR Replication
     DFS01 <-- DFS02 : DFSR Replication
 ```
-
 There are two parts of **DFS** that can be used separately or together. 
 - The first is the **namespace part**. That's where we create a namespace like `Corp`, which we're going to create. So that it's access via `\\[domain]\[namespace]`.
 - Another part is the **DFS replication**, which we can use to replicate two folders that are on two different servers.
