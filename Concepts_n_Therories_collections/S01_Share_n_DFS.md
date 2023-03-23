@@ -124,7 +124,7 @@ Let's create our `Corp` namespace. Open **"Server Manager"** window, on the top 
 
 
 ## Add Namespace Server to Existing Namespace
-Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> **"\\itdvdscorp.com\Corp"** ->
+Back to **"DFS Management" MMC**, on the left pane, expand the **"Namespaces"** -> **"`\\itdvdscorp.com\Corp`"** ->
 
 -> right-click the same item -> **"Add Namespace Server..."** ->
 
@@ -335,7 +335,7 @@ To create a share drive that include the domain in the share drive path, you nee
 
 18. Close the **"Properties"** window.
 
-The share drive path will now include the domain when accessed by the domain users, for example, `\DOMAIN\ShareName`.
+The share drive path will now include the domain when accessed by the domain users, for example, `\\DOMAIN\ShareName`.
 
 
 
