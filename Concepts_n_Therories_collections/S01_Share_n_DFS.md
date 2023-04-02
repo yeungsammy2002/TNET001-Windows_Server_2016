@@ -196,7 +196,7 @@ Let's right-click on **"`> Replication`"** on the ***left pane*** of the **"DFS 
 
 -> on the **"Replication Group Type"** tab of the **"New Replication Group Wizard"** window, select **"Multipurpose replication group"** ->
 
--> on the **"Name and Domain"** tab, enter **"CompanyDocs"** in the **"Name of replcation group:"** field, keep everything as default ->
+-> on the **"Name and Domain"** tab, enter **"CompanyDocs"** in the **"Name of replication group:"** field, keep everything as default ->
 
 -> on the **"Replication Group Members"** tab, click **"Add..."** button ->
 
