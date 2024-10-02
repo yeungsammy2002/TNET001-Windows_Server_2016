@@ -81,3 +81,45 @@ Fill the name you would like in the **"Computer name:"** field on the **"Compute
 
 
 
+
+## Upgrade Windows Server 2022 Evaluation edition to Windows Server Standard edition
+
+If your server is running an evaluation version of Windows Server Standard or Datacenter edition, you can convert it to an available retail version. Run the following commands in an elevated command prompt or PowerShell session.
+
+1. Determine the current edition name by running the following command. The output is an abbreviated form of the edition name. For example, Windows Server Datacenter (Desktop Experience) Evaluation edition is `ServerDatacenterEval`.
+
+#### Windows Command Prompt
+```
+DISM /online /Get-CurrentEdition
+```
+
+2. Verify which editions the current installation can be converted to by running the following command. From the output, make a note of the edition name you want to upgrade to.
+
+#### Windows Command Prompt
+```
+DISM /online /Get-TargetEditions
+```
+
+3. Run the following command to save the Microsoft Software License Terms for Windows Server, which you can then review. Replace the <target edition> placeholder with the edition name you noted from the previous step.
+
+#### Windows Command Prompt
+```
+DISM /online /Set-Edition:<target edition> /GetEula:C:\license.rtf
+```
+
+4. Enter the new edition name and corresponding retail product key in the following command. The upgrade process requires you to accept the Microsoft Software License Terms for Windows Server that you saved previously.
+
+#### Windows Command Prompt
+```
+DISM /online /Set-Edition:<target edition> /ProductKey:<product key> /AcceptEula
+```
+
+For example:
+
+#### Windows Command Prompt
+```
+DISM /online /Set-Edition:ServerDatacenter /ProductKey:ABCDE-12345-ABCDE-12345-ABCDE /AcceptEula
+```
+
+Reference: https://learn.microsoft.com/en-us/windows-server/get-started/upgrade-conversion-options
+
